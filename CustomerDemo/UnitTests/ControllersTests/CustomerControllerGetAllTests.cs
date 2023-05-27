@@ -73,6 +73,8 @@ namespace UnitTests.ControllersTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(Exception),
+            "Something went wrong")]
         public void CustomerControlerGetAll_Exception()
         {
             List<Customer> customers = new List<Customer>();
@@ -82,18 +84,11 @@ namespace UnitTests.ControllersTests
             bool success = false;
 
             //Act
-            try
-            {
-                CustomerController customerController = new CustomerController(mockCustomerReporitory.Object, _mockLogger.Object, null);
-                var result = customerController.Get();
-            } 
-            catch (Exception)
-            {
-                success = true;
-            }
-
+            CustomerController customerController = new CustomerController(mockCustomerReporitory.Object, _mockLogger.Object, null);
+            var result = customerController.Get();
+    
             //Assert
-            Assert.IsTrue(success);
+            Assert.Fail();
         }
     }
 }
