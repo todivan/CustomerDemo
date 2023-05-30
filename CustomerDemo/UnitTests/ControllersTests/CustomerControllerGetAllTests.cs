@@ -38,7 +38,7 @@ namespace UnitTests.ControllersTests
         }
 
         [TestMethod]
-        public void CustomerControlerGetAll_Success()
+        public async Task CustomerControlerGetAll_SuccessAsync()
         {
             //Arrange
             Customer customer1 = new Customer();
@@ -55,11 +55,11 @@ namespace UnitTests.ControllersTests
 
             var mockCustomerReporitory = new Mock<IRepository<Customer>>();
             mockCustomerReporitory.Setup(e => e.GetAll())
-            .Returns(customers);
+            .ReturnsAsync(customers);
 
             //Act
             CustomerController customerController = new CustomerController(mockCustomerReporitory.Object, _mockLogger.Object, _mapper);
-            var result = customerController.Get();
+            var result = await customerController.GetAsync();
 
             //Assert
             Assert.IsNotNull(result);
@@ -73,19 +73,16 @@ namespace UnitTests.ControllersTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exception),
-            "Something went wrong")]
-        public void CustomerControlerGetAll_Exception()
+        [ExpectedException(typeof(Exception), "Something went wrong")]
+        public async Task CustomerControlerGetAll_ExceptionAsync()
         {
             List<Customer> customers = new List<Customer>();
 
             var mockCustomerReporitory = new Mock<IRepository<Customer>>();
 
-            bool success = false;
-
             //Act
             CustomerController customerController = new CustomerController(mockCustomerReporitory.Object, _mockLogger.Object, null);
-            var result = customerController.Get();
+            await customerController.GetAsync();
     
             //Assert
             Assert.Fail();

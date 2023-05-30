@@ -52,13 +52,14 @@ namespace CustomerDemo.Controllers
             }
         }
 
+        //Example of async
         [HttpGet(Name = "GetAllCustomers")]
-        public IEnumerable<CustomerListDto> Get()
+        public async Task<IEnumerable<CustomerListDto>> GetAsync()
         {
             try
             {
                 _logger.LogInformation("Getting all customers");
-                var allCustomers = _repository.GetAll();
+                var allCustomers = await _repository.GetAll();
                 var allCustomersDto = _mapper.Map<List<CustomerListDto>>(allCustomers);
                 return allCustomersDto;
             }

@@ -5,7 +5,7 @@ namespace CustomerDemo.DB
 {
     public interface IRepository<T> where T : class, IEntity
     {
-        List<T> GetAll();
+        Task<List<T>> GetAll();
         T Get(Guid id);
         T Add(T? entity);
         T Update(T entity);

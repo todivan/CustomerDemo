@@ -29,8 +29,10 @@ namespace CustomerDemo.DB
             return DB.FirstOrDefault(x => x.Id.CompareTo(id) == 0);
         }
 
-        public List<Customer> GetAll()
+        //Example of async
+        public async Task<List<Customer>> GetAll()
         {
+            await Task.Delay(1000); //Simulate DB request delay
             return DB;
         }
 
